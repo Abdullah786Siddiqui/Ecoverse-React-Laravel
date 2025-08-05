@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../Api/api";
+import ProductSkeleton from "../../components/productSkeleton";
+import BrandSkeleton from "../../components/brandSkeleton";
 
 const Products = () => {
   const [isProducts, setProducts] = useState([]);
@@ -10,7 +12,6 @@ const Products = () => {
   useEffect(() => {
     getProductsData();
     getbrandData();
-
   }, [subcategory_id]);
 
   const getProductsData = async () => {
@@ -25,17 +26,18 @@ const Products = () => {
     }
   };
 
-   const getbrandData = async () => {
-  
+  const getbrandData = async () => {
+    setLoading(true);
     try {
       const response = await api.get(`/brands/${subcategory_id}`);
       setbrand(response.data.data);
     } catch (error) {
       console.log(error);
-    } 
+    }finally {
+      setLoading(false);
+    }
   };
- console.log(isbrand);
- 
+  console.log(isbrand);
 
   return (
     <div className="container-fluid products mt-4 h-100">
@@ -49,42 +51,26 @@ const Products = () => {
               <h6 className="text-muted mb-3 border-bottom pb-2 fw-semibold">
                 Brand
               </h6>
-
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input brand-filter"
-                  type="checkbox"
-                  value="Apple"
-                  id="brand1"
-                />
-                <label className="form-check-label" htmlFor="brand1">
-                  Apple
-                </label>
-              </div>
-
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input brand-filter"
-                  type="checkbox"
-                  value="Samsung"
-                  id="brand2"
-                />
-                <label className="form-check-label" htmlFor="brand2">
-                  Samsung
-                </label>
-              </div>
-
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input brand-filter"
-                  type="checkbox"
-                  value="Google"
-                  id="brand3"
-                />
-                <label className="form-check-label" htmlFor="brand3">
-                  Google
-                </label>
-              </div>
+              {loading ? (
+               <BrandSkeleton />
+              ) : (
+                isbrand.map((brand) => (
+                  <div key={brand.id} className="form-check mb-3">
+                    <input
+                      className="form-check-input brand-filter"
+                      type="checkbox"
+                      value={brand.name}
+                      id={`brand-${brand.id}`}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={`brand-${brand.id}`}
+                    >
+                      {brand.name}
+                    </label>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* Filter Buttons Right Below Brand */}
@@ -109,22 +95,7 @@ const Products = () => {
           <div id="product-list">
             <div className="row g-3">
               {loading ? (
-                <div
-                  style={{ height: "100vh" }}
-                  className="d-flex justify-content-center align-items-center"
-                >
-                  <div
-                    className="spinner-border"
-                    role="status"
-                    style={{
-                      width: "5rem",
-                      height: "5rem",
-                      borderWidth: "0.6rem",
-                    }}
-                  >
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </div>
+                <ProductSkeleton />
               ) : (
                 isProducts.map((product) => (
                   <div
@@ -154,7 +125,7 @@ const Products = () => {
                             Rs.{product.price}
                           </span>
                           <small className="text-muted text-decoration-line-through ms-2">
-                            Rs.1,120
+                           Rs. { (product.price * 1.2).toFixed(0) }
                           </small>
                         </p>
 

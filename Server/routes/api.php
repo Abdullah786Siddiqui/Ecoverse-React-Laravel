@@ -12,4 +12,8 @@ Route::get('/user', function (Request $request) {
 Route::get('/subcategory',[ProductController::class,'getSubcategory']);
 Route::get('/products/{id}',[ProductController::class,'getProducts']);
 Route::get('/brands/{id}',[ProductController::class,'getbrands']);
+// Route::get('/brands/{id}',[ProductController::class,'getAllbrands']);
+// Route::get('/products/{id}',[ProductController::class,'getAllProducts']);
+
+
 

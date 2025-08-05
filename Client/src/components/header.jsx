@@ -5,8 +5,27 @@ import api from "../Api/api";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const placeholders = [
+    "Shoes for men",
+    "Smartphones under $500",
+    "Best laptops 2025",
+    "Kitchen gadgets",
+    "Trendy backpacks",
+    "Wireless headphones",
+  ];
   const [isSubcategory, setSubcategory] = useState([]);
+  const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholders[0]);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentPlaceholder((prev) => {
+        const currentIndex = placeholders.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % placeholders.length;
+        return placeholders[nextIndex];
+      });
+    }, 3000); 
 
+    return () => clearInterval(intervalId);
+  }, []);
   useEffect(() => {
     getSubCategory();
   }, []);
@@ -37,8 +56,8 @@ const Header = () => {
               <img
                 src="/icons/shopping_cart_37dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"
                 alt=" Logo"
-                height="25"
-                width="27"
+                height="30"
+                width="30"
                 className="mb-1 mb-md-0"
               />
               <span className="fs-4 fw-semibold text-dark mb-1">Ecoverse</span>
@@ -46,16 +65,21 @@ const Header = () => {
 
             {/* Search bar - takes remaining space */}
             <form
-              className="d-flex flex-grow-1 position-relative mx-3"
+              className="d-flex flex-grow-1 position-relative mx-2 mx-md-3"
               role="search"
             >
               <div className="input-group w-100">
                 <input
                   type="search"
                   className="form-control border-end-0"
-                  placeholder="What can we help you find today?"
+                  placeholder={currentPlaceholder}
                   aria-label="Search"
                   style={{
+                    fontWeight: "bold",
+                    color: "#6c757d",
+                    fontSize: "0.875rem",
+                    userSelect: "none",
+                    pointerEvents: "none",
                     borderRadius: "8px 0 0 8px",
                     paddingLeft: "15px",
                     height: "40px",
@@ -164,9 +188,9 @@ const Header = () => {
               </div>
             </div>
           </div>
-
+          {/* d-none d-md-block */}
           {/* Navigation Links Row with Horizontal Scroll */}
-          <div className="nav-scroll-container mt-1 pt-2 d-none d-md-block">
+          <div className="nav-scroll-container mt-1 pt-2 ">
             <div className="nav-scroll-wrapper">
               {/* 1. Categories Dropdown */}
               <div className="dropdown nav-dropdown flex-shrink-0">
@@ -185,7 +209,10 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 1)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <Link  to={`/products/${subcategory.id}`} className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
@@ -206,11 +233,14 @@ const Header = () => {
                   Health & Beauty
                 </a>
                 <ul className="dropdown-menu ">
-                   {isSubcategory
+                  {isSubcategory
                     .filter((subcategory) => subcategory.category_id === 2)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
@@ -231,11 +261,14 @@ const Header = () => {
                   TV & Home Appliances
                 </a>
                 <ul className="dropdown-menu ">
-                   {isSubcategory
+                  {isSubcategory
                     .filter((subcategory) => subcategory.category_id === 4)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
@@ -260,7 +293,10 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 3)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
@@ -285,7 +321,10 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 6)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
@@ -306,11 +345,14 @@ const Header = () => {
                   Fashions
                 </a>
                 <ul className="dropdown-menu ">
-                   {isSubcategory
+                  {isSubcategory
                     .filter((subcategory) => subcategory.category_id === 5)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
+                        <Link
+                          to={`/products/${subcategory.id}`}
+                          className="dropdown-item"
+                        >
                           {subcategory.name}
                         </Link>
                       </li>
