@@ -1,41 +1,71 @@
+import { FaCartShopping } from "react-icons/fa6";
+import { FiSearch } from "react-icons/fi";
+
 const Header = () => {
   return (
     <>
-      <>
-        <nav className="navbar navbar-expand-lg bg-white border-bottom pt-2">
-          <div className="container-fluid mx-2 navbar_des">
-            <a className="navbar-brand d-flex align-items-start fs-4" href="/">
-              <strong className="mb-2">
-                <img
-                  height="32px"
-                  src="./Assets/Images/shopping_cart_37dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"
-                  alt=""
-                />
-                <span className="fw-bold">Ecoverse</span>
-              </strong>
+            
+      
+      <nav className="navbar bg-white py-2 f " style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
+    
+        <div className="container-fluid ">
+          {/* First Row */}
+          <div className="d-flex align-items-center justify-content-between  w-100">
+            {/* Logo */}
+            <a
+              href="/"
+              className="navbar-brand d-flex align-items-center text-decoration-none me-1"
+            >
+              <img
+                src="./public/icons/shopping_cart_37dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"
+                alt="Ecoverse Logo"
+                height="25"
+                width="27"
+                className="mb-1 mb-md-0"
+              />
+              <span className="fs-4 fw-semibold text-dark mb-1">Ecoverse</span>
             </a>
 
+            {/* Search bar - takes remaining space */}
             <form
-              autoComplete="off"
-              className="d-flex flex-grow-1 mx-4 position-relative"
+              className="d-flex flex-grow-1 position-relative mx-3"
               role="search"
-              id="searchForm"
             >
-              <div className="input-group flex-grow-1">
+              <div className="input-group w-100">
                 <input
-                  className="form-control search-box searchInput"
                   type="search"
+                  className="form-control border-end-0"
                   placeholder="What can we help you find today?"
+                  aria-label="Search"
+                  style={{
+                    borderRadius: "8px 0 0 8px",
+                    paddingLeft: "15px",
+                    height: "40px",
+                    backgroundColor: "#f8f9fa",
+                    outline: "none",
+                    border: "1px solid #dee2e6",
+                  }}
                 />
+
                 <button
-                  id="search-btn"
-                  className="btn btn-primary"
+                  className="btn btn-outline-secondary d-flex align-items-center justify-content-center border-start-0"
                   type="submit"
+                  style={{
+                    borderRadius: "0 8px 8px 0",
+                    backgroundColor: "#0d6efd",
+                    border: "1px solid #dee2e6",
+                    height: "40px",
+                    width: "42px",
+                    padding: 0,
+                    outline: "none",
+                    boxShadow: "none",
+                  }}
                 >
-                  <i className="bi bi-search"></i>
+                  <FiSearch style={{ fontSize: "18px", color: "white" }} />
                 </button>
               </div>
 
+              {/* Optional: live search result card */}
               <div
                 className="card position-absolute start-0 w-100 d-none"
                 style={{ top: "100%", zIndex: 1000 }}
@@ -45,76 +75,294 @@ const Header = () => {
               </div>
             </form>
 
-            <a
-              className="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center position-relative"
-              style={{ width: "40px", height: "40px" }}
-              href="#"
-            >
-              <i className="fas fa-cart-shopping"></i>
-              <span
-                className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-circle d-flex align-items-center justify-content-center"
-                id="cartCount"
-                style={{ width: "18px", height: "18px", fontSize: "0.65rem" }}
-              ></span>
-            </a>
-
-            <div className="dropdown drop">
+            {/* Cart + User dropdown - hidden on mobile (d-none), visible on large screens (d-lg-flex) */}
+            <div className="d-none d-md-flex align-items-center gap-2">
+              {/* Cart */}
               <a
-                className="nav-link d-flex align-items-center"
                 href="#"
-                data-bs-toggle="dropdown"
+                className="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center position-relative"
+                style={{ width: "40px", height: "40px" }}
               >
-                <img
-                  src="./Assets/Images/user.png"
-                  width="40"
-                  height="40"
-                  className="rounded-circle me-1"
-                  alt="User"
-                />
-                My Account
+                <FaCartShopping />
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-circle"
+                  style={{ width: "18px", height: "18px", fontSize: "0.65rem" }}
+                  id="cartCount"
+                ></span>
               </a>
 
-              <div
-                className="dropdown-menu dropdown-menu-end p-3 drop"
-                style={{ width: "250px", zIndex: 1100, overflow: "hidden" }}
-              >
-                <div className="text-center mb-2">
+              {/* User dropdown */}
+              <div className="dropdown">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
                   <img
-                    src="./Assets/Images/user.png"
-                    width="50"
-                    height="50"
-                    className="rounded-circle mb-2"
+                    src="./public/images/user.png"
                     alt="User"
+                    width="36"
+                    height="36"
+                    className="rounded-circle me-2 "
                   />
-                  <div>
-                    <strong>Username</strong>
+                  <span className="fw-semibold">My Account</span>
+                </a>
+
+                <div
+                  className="dropdown-menu dropdown-menu-end p-3"
+                  style={{ width: "240px" }}
+                >
+                  <div className="text-center mb-2">
+                    <img
+                      src="./Assets/Images/user.png"
+                      width="48"
+                      height="48"
+                      className="rounded-circle mb-1"
+                      alt="User"
+                    />
+                    <div>
+                      <strong>Username</strong>
+                    </div>
+                    <small className="text-muted">user@example.com</small>
+                    <a
+                      href="/homeprofile"
+                      className="btn btn-outline-primary btn-sm w-100 mt-2"
+                    >
+                      View Profile
+                    </a>
                   </div>
-                  <small className="text-muted d-block text-truncate">
-                    user@example.com
-                  </small>
-                  <a
-                    href="/homeprofile"
-                    className="btn btn-outline-primary btn-sm w-100 mt-2"
-                  >
-                    View Profile
+                  <hr />
+                  <a className="dropdown-item" href="/homeprofile">
+                    <i className="bi bi-person me-2"></i> My Account
+                  </a>
+                  <a className="dropdown-item" href="/Profile">
+                    <i className="bi bi-bag-check me-2"></i> My Orders
+                  </a>
+                  <hr />
+                  <a className="dropdown-item text-danger" href="/logout">
+                    <i className="bi bi-box-arrow-right me-2"></i> Log Out
                   </a>
                 </div>
-                <hr />
-                <a className="dropdown-item" href="/homeprofile">
-                  <i className="bi bi-person me-2"></i> My Account
-                </a>
-                <a className="dropdown-item" href="/Profile">
-                  <i className="bi bi-bag-check me-2"></i> My Orders
-                </a>
-                <hr />
-                <a className="dropdown-item text-danger" href="/logout">
-                  <i className="bi bi-box-arrow-right me-2"></i> Log Out
-                </a>
               </div>
             </div>
           </div>
-        </nav>
-      </>
+
+          {/* Navigation Links Row with Horizontal Scroll */}
+           <div className="nav-scroll-container mt-1 pt-2 d-none d-md-block">
+            <div className="nav-scroll-wrapper">
+              {/* 1. Categories Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-grid-3x3-gap me-2"></i>
+                  Electronics
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/electronics">Electronics</a></li>
+                  <li><a className="dropdown-item" href="/fashion">Fashion</a></li>
+                  <li><a className="dropdown-item" href="/home-garden">Home & Garden</a></li>
+                </ul>
+              </div>
+
+              {/* 2. Deals Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-tag me-2"></i>
+                  Health & Beauty
+
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/daily-deals">Daily Deals</a></li>
+                  <li><a className="dropdown-item" href="/flash-sale">Flash Sale</a></li>
+                  <li><a className="dropdown-item" href="/clearance">Clearance</a></li>
+                </ul>
+              </div>
+
+              {/* 3. Brands Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-award me-2"></i>
+                  
+TV & Home Appliances
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/premium-brands">Premium</a></li>
+                  <li><a className="dropdown-item" href="/luxury">Luxury</a></li>
+                  <li><a className="dropdown-item" href="/popular">Popular</a></li>
+                </ul>
+              </div>
+
+              {/* 4. New Arrivals Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-box-seam me-2"></i>
+                 Home & Lifestyle
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/new-tech">Tech</a></li>
+                  <li><a className="dropdown-item" href="/new-fashion">Fashion</a></li>
+                  <li><a className="dropdown-item" href="/new-home">Home Items</a></li>
+                </ul>
+              </div>
+
+              {/* 5. Best Sellers Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-star me-2"></i>
+                 Books & Stationary
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/top-electronics">Top Electronics</a></li>
+                  <li><a className="dropdown-item" href="/top-fashion">Top Fashion</a></li>
+                  <li><a className="dropdown-item" href="/top-home">Top Home</a></li>
+                </ul>
+              </div>
+
+              {/* 6. Offers Dropdown */}
+              <div className="dropdown nav-dropdown flex-shrink-0">
+                <a
+                  href="#"
+                  className="nav-link d-flex align-items-center text-dark fw-medium"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="bi bi-percent me-2"></i>
+                Fashions
+                </a>
+                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
+                  <li><a className="dropdown-item" href="/bulk-offers">Bulk Offers</a></li>
+                  <li><a className="dropdown-item" href="/limited-time">Limited Time</a></li>
+                  <li><a className="dropdown-item" href="/bundle-deals">Bundle Deals</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+     
+
+      {/* Custom CSS for animations and horizontal scroll */}
+      <style jsx>{`
+        /* Horizontal scroll container */}
+        .nav-scroll-container {
+          width: 100%;
+          overflow-x: auto;
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+      
+
+        .nav-scroll-wrapper {
+          display: flex;
+          gap: 1rem;
+          padding-bottom: 2px; /* Small padding to prevent cut-off */
+          min-width: max-content;
+        }
+
+        .nav-dropdown {
+          white-space: nowrap;
+        }
+
+        .nav-dropdown .dropdown-menu {
+          opacity: 0;
+          transform: translateY(-10px);
+          transition: all 0.3s ease;
+          border: none;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          margin-top: 5px;
+        }
+
+        .nav-dropdown.show .dropdown-menu,
+        .nav-dropdown:hover .dropdown-menu {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .nav-dropdown .dropdown-item {
+          padding: 10px 16px;
+          transition: all 0.2s ease;
+          border-radius: 6px;
+          margin: 2px 8px;
+        }
+
+        .nav-dropdown .dropdown-item:hover {
+          background-color: #f8f9fa;
+          transform: translateX(5px);
+          color: #0d6efd;
+        }
+
+        .nav-dropdown .nav-link:hover {
+          color: #0d6efd !important;
+          transform: translateY(-1px);
+          transition: all 0.2s ease;
+        }
+
+        .nav-dropdown .dropdown-toggle::after {
+          display: none;
+        }
+
+        /* Hover effect for simple links */
+        // .nav-link:not(.dropdown-toggle):hover {
+        //   color: #0d6efd !important;
+        //   transform: translateY(-1px);
+        //   transition: all 0.2s ease;
+        // }
+
+        /* Responsive adjustments */}
+        @media (max-width: 768px) {
+          .nav-scroll-wrapper {
+            gap: 0.75rem;
+          }
+          
+          .nav-dropdown .dropdown-menu {
+            position: static !important;
+            transform: none !important;
+            opacity: 1 !important;
+            box-shadow: none !important;
+            border: 1px solid #dee2e6;
+            margin-top: 8px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .nav-scroll-wrapper {
+            gap: 0.5rem;
+          }
+        }
+      `}</style>
     </>
   );
 };
