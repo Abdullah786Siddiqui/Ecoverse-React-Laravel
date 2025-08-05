@@ -1,7 +1,6 @@
 import Category from "../../subComponents/Home/category";
 import Crousel from "../../subComponents/Home/crousel";
 import Customersay from "../../subComponents/Home/customersay";
-// import Customersay from "../../subComponents/Home/customersay";
 import Productlist from "../../subComponents/Home/Productlist";
 
 const Home = () => {
@@ -11,8 +10,6 @@ const Home = () => {
       <Category />
       <Productlist />
       <Customersay />
-
-     
     </>
   );
 };

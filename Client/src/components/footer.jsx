@@ -12,7 +12,7 @@ import { FiSend } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <footer className="text-dark pt-5 pb-4 mt-5">
+    <footer className="text-dark pt-5 pb-4 mt-5" style={{ position: "sticky", bottom: 0, zIndex: 1030 }}>
       <div className="container">
         <div className="row gy-5">
 

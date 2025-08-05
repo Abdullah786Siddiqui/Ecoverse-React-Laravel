@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import api from "../Api/api";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isSubcategory, setSubcategory] = useState([]);
@@ -22,26 +23,26 @@ const Header = () => {
   return (
     <>
       <nav
-        className="navbar bg-white py-2 f "
+        className="navbar bg-white py-2  "
         style={{ position: "sticky", top: 0, zIndex: 1030 }}
       >
         <div className="container-fluid ">
           {/* First Row */}
           <div className="d-flex align-items-center justify-content-between  w-100">
             {/* Logo */}
-            <a
-              href="/"
+            <Link
+              to={"/"}
               className="navbar-brand d-flex align-items-center text-decoration-none me-1"
             >
               <img
-                src="./public/icons/shopping_cart_37dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"
-                alt="Ecoverse Logo"
+                src="/icons/shopping_cart_37dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"
+                alt=" Logo"
                 height="25"
                 width="27"
                 className="mb-1 mb-md-0"
               />
               <span className="fs-4 fw-semibold text-dark mb-1">Ecoverse</span>
-            </a>
+            </Link>
 
             {/* Search bar - takes remaining space */}
             <form
@@ -116,7 +117,7 @@ const Header = () => {
                   data-bs-toggle="dropdown"
                 >
                   <img
-                    src="./public/images/user.png"
+                    src="/images/user.png"
                     alt="User"
                     width="36"
                     height="36"
@@ -184,9 +185,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 1)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                        <Link  to={`/products/${subcategory.id}`} className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>
@@ -209,9 +210,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 2)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                        <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>
@@ -234,9 +235,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 4)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>
@@ -259,9 +260,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 3)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                        <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>
@@ -284,9 +285,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 6)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>
@@ -309,9 +310,9 @@ const Header = () => {
                     .filter((subcategory) => subcategory.category_id === 5)
                     .map((subcategory) => (
                       <li key={subcategory.id}>
-                        <a className="dropdown-item" href="/electronics">
+                       <Link to={`/products/${subcategory.id}`}className="dropdown-item" >
                           {subcategory.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\homeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,4 +9,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/subcategory',[homeController::class,'index']);
+Route::get('/subcategory',[ProductController::class,'getSubcategory']);
+Route::get('/products/{id}',[ProductController::class,'getProducts']);
+Route::get('/brands/{id}',[ProductController::class,'getbrands']);
+
