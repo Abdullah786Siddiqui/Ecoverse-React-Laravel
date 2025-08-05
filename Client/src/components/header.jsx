@@ -1,13 +1,30 @@
+import { useEffect, useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
+import api from "../Api/api";
 
 const Header = () => {
+  const [isSubcategory, setSubcategory] = useState([]);
+
+  useEffect(() => {
+    getSubCategory();
+  }, []);
+
+  const getSubCategory = async () => {
+    try {
+      const response = await api.get("/subcategory");
+      setSubcategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-            
-      
-      <nav className="navbar bg-white py-2 f " style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
-    
+      <nav
+        className="navbar bg-white py-2 f "
+        style={{ position: "sticky", top: 0, zIndex: 1030 }}
+      >
         <div className="container-fluid ">
           {/* First Row */}
           <div className="d-flex align-items-center justify-content-between  w-100">
@@ -148,7 +165,7 @@ const Header = () => {
           </div>
 
           {/* Navigation Links Row with Horizontal Scroll */}
-           <div className="nav-scroll-container mt-1 pt-2 d-none d-md-block">
+          <div className="nav-scroll-container mt-1 pt-2 d-none d-md-block">
             <div className="nav-scroll-wrapper">
               {/* 1. Categories Dropdown */}
               <div className="dropdown nav-dropdown flex-shrink-0">
@@ -162,10 +179,16 @@ const Header = () => {
                   <i className="bi bi-grid-3x3-gap me-2"></i>
                   Electronics
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/electronics">Electronics</a></li>
-                  <li><a className="dropdown-item" href="/fashion">Fashion</a></li>
-                  <li><a className="dropdown-item" href="/home-garden">Home & Garden</a></li>
+                <ul className="dropdown-menu ">
+                  {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 1)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
 
@@ -180,12 +203,17 @@ const Header = () => {
                 >
                   <i className="bi bi-tag me-2"></i>
                   Health & Beauty
-
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/daily-deals">Daily Deals</a></li>
-                  <li><a className="dropdown-item" href="/flash-sale">Flash Sale</a></li>
-                  <li><a className="dropdown-item" href="/clearance">Clearance</a></li>
+                <ul className="dropdown-menu ">
+                   {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 2)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
 
@@ -199,13 +227,18 @@ const Header = () => {
                   style={{ textDecoration: "none" }}
                 >
                   <i className="bi bi-award me-2"></i>
-                  
-TV & Home Appliances
+                  TV & Home Appliances
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/premium-brands">Premium</a></li>
-                  <li><a className="dropdown-item" href="/luxury">Luxury</a></li>
-                  <li><a className="dropdown-item" href="/popular">Popular</a></li>
+                <ul className="dropdown-menu ">
+                   {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 4)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
 
@@ -219,17 +252,23 @@ TV & Home Appliances
                   style={{ textDecoration: "none" }}
                 >
                   <i className="bi bi-box-seam me-2"></i>
-                 Home & Lifestyle
+                  Home & Lifestyle
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/new-tech">Tech</a></li>
-                  <li><a className="dropdown-item" href="/new-fashion">Fashion</a></li>
-                  <li><a className="dropdown-item" href="/new-home">Home Items</a></li>
+                <ul className="dropdown-menu ">
+                  {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 3)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
 
               {/* 5. Best Sellers Dropdown */}
-              <div className="dropdown nav-dropdown flex-shrink-0">
+              <div className="dropdown  flex-shrink-0">
                 <a
                   href="#"
                   className="nav-link d-flex align-items-center text-dark fw-medium"
@@ -238,12 +277,18 @@ TV & Home Appliances
                   style={{ textDecoration: "none" }}
                 >
                   <i className="bi bi-star me-2"></i>
-                 Books & Stationary
+                  Books & Stationary
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/top-electronics">Top Electronics</a></li>
-                  <li><a className="dropdown-item" href="/top-fashion">Top Fashion</a></li>
-                  <li><a className="dropdown-item" href="/top-home">Top Home</a></li>
+                <ul className="dropdown-menu ">
+                  {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 6)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
 
@@ -257,22 +302,27 @@ TV & Home Appliances
                   style={{ textDecoration: "none" }}
                 >
                   <i className="bi bi-percent me-2"></i>
-                Fashions
+                  Fashions
                 </a>
-                <ul className="dropdown-menu dropdown-menu-animated shadow-sm">
-                  <li><a className="dropdown-item" href="/bulk-offers">Bulk Offers</a></li>
-                  <li><a className="dropdown-item" href="/limited-time">Limited Time</a></li>
-                  <li><a className="dropdown-item" href="/bundle-deals">Bundle Deals</a></li>
+                <ul className="dropdown-menu ">
+                   {isSubcategory
+                    .filter((subcategory) => subcategory.category_id === 5)
+                    .map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <a className="dropdown-item" href="/electronics">
+                          {subcategory.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </nav>
-     
 
       {/* Custom CSS for animations and horizontal scroll */}
-      <style jsx>{`
+      <style>{`
         /* Horizontal scroll container */}
         .nav-scroll-container {
           width: 100%;
@@ -311,19 +361,9 @@ TV & Home Appliances
           transform: translateY(0);
         }
 
-        .nav-dropdown .dropdown-item {
-          padding: 10px 16px;
-          transition: all 0.2s ease;
-          border-radius: 6px;
-          margin: 2px 8px;
-        }
+       
 
-        .nav-dropdown .dropdown-item:hover {
-          background-color: #f8f9fa;
-          transform: translateX(5px);
-          color: #0d6efd;
-        }
-
+       
         .nav-dropdown .nav-link:hover {
           color: #0d6efd !important;
           transform: translateY(-1px);
