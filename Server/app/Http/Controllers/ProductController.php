@@ -61,7 +61,5 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function getAllbrands (int $id){
-        // $allBrands = DB::table('brand')->where('brand.id','=','')
-    }
+  
 }

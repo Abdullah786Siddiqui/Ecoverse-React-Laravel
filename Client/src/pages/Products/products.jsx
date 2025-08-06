@@ -45,7 +45,7 @@ const Products = () => {
 
   const handleBrandChange = (brandName) => {
     if (selectedBrands.includes(brandName)) {
-      setSelectedBrands(selectedBrands.filter((b) => b !== brandName));
+      setSelectedBrands(selectedBrands.filter((brand) => brand !== brandName));
     } else {
       setSelectedBrands([...selectedBrands, brandName]);
     }
@@ -66,6 +66,9 @@ const Products = () => {
     setSelectedBrands([]);
     setFilteredProducts(allProducts);
   };
+
+
+  
 
   return (
     <div className="container-fluid products mt-4 h-100">
@@ -137,11 +140,11 @@ const Products = () => {
               ) : (
                 filteredProducts.map((product) => (
                   <div
-                    key={product.id}
+                    key={product.productid}
                     className="col-sm-6 col-md-4 mb-4 product-card-animate"
                   >
                     <Link
-                      to={`/product-detail/${product.id}`}
+                      to={`/detailproducts/${product.productid}`}
                       className="text-decoration-none"
                     >
                       <div className="card border-0 shadow-sm rounded-4 h-100 p-4 position-relative hover-shadow">

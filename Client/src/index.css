@@ -1,3 +1,4 @@
+@import "tailwindcss";
 /* Navbar */
 input:focus,
 button:focus {
@@ -35,108 +36,108 @@ button:focus {
 
 /* ///customer say  */
 
- html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden; /* NO horizontal scroll on whole page */
-      width: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-    }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* NO horizontal scroll on whole page */
+  width: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
 
-    /* Section container */
-    .customer-says {
-      padding: 40px 20px;
-      background: white;
-      text-align: center;
-      width: 100%;
-      max-width: 100vw;
-      box-sizing: border-box;
-      margin: 0 auto;
-      overflow-x: hidden; /* NO scroll here either */
-    }
+/* Section container */
+.customer-says {
+  padding: 40px 20px;
+  background: white;
+  text-align: center;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  margin: 0 auto;
+  overflow-x: hidden; /* NO scroll here either */
+}
 
-    .customer-says h2 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-    }
+.customer-says h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
 
-    /* Horizontal scroll carousel */
-    .testimonial-carousel {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding-bottom: 20px;
-      /* animation: scroll 1s  linear infinite; */
-    
-    }
+/* Horizontal scroll carousel */
+.testimonial-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 20px;
+  /* animation: scroll 1s  linear infinite; */
+}
 
-    .testimonial-carousel::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
+.testimonial-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
-    /* Testimonial cards */
-    .testimonial-card {
-      display: flex;
-      min-width: 300px;
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      flex-shrink: 0;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      align-items: center;
-    }
+/* Testimonial cards */
+.testimonial-card {
+  display: flex;
+  min-width: 300px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  align-items: center;
+}
 
-    .testimonial-card:hover {
-      transform: translateY(-5px);
-    }
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
 
-    .testimonial-card img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-right: 20px;
-      flex-shrink: 0;
-    }
+.testimonial-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
 
-    .testimonial-info {
-      text-align: left;
-    }
+.testimonial-info {
+  text-align: left;
+}
 
-    .testimonial-info h4 {
-      margin: 0 0 8px 0;
-      font-size: 1.3rem;
-      color: #222;
-    }
+.testimonial-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+  color: #222;
+}
 
-    .testimonial-info p {
-      font-size: 1.1rem;
-      color: #444;
-      margin-bottom: 10px;
-      max-width: 300px;
-      line-height: 1.4;
-    }
+.testimonial-info p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 10px;
+  max-width: 300px;
+  line-height: 1.4;
+}
 
-    .stars {
-      color: gold;
-      font-size: 1.2rem;
-      user-select: none;
-    }
+.stars {
+  color: gold;
+  font-size: 1.2rem;
+  user-select: none;
+}
 
-    /* Auto scroll animation */
-    @keyframes scroll-left {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    } 
+/* Auto scroll animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
-    .bg-skeleton {
+.bg-skeleton {
   background-color: #e0e0e0;
   animation: pulse 1.5s infinite ease-in-out;
 }
@@ -167,3 +168,43 @@ button:focus {
 }
 
 
+
+
+
+
+
+
+
+
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #e2e8f0; /* soft bluish-gray */
+  border-radius: 8px;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 100%;
+  }
+}

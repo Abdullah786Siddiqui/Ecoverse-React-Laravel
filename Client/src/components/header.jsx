@@ -43,7 +43,7 @@ const Header = () => {
     <>
       <nav
         className="navbar bg-white py-2  "
-        style={{ position: "sticky", top: 0, zIndex: 1030 }}
+        style={{ position: "fixed", top: 0, zIndex: 9999 }}
       >
         <div className="container-fluid ">
           {/* First Row */}
@@ -141,7 +141,7 @@ const Header = () => {
                   data-bs-toggle="dropdown"
                 >
                   <img
-                    src="/images/user.png"
+                    src="./images/user.png"
                     alt="User"
                     width="36"
                     height="36"
