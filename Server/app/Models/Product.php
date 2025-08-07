@@ -51,7 +51,8 @@ class Product extends Model
 		'subcategory_id',
 		'brand_id',
 		'category_id',
-		'quantity'
+		'quantity',
+		
 	];
 
 	public function subcategory()

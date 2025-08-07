@@ -32,7 +32,7 @@ const Header = () => {
 
   const getSubCategory = async () => {
     try {
-      const response = await api.get("/subcategory");
+      const response = await api.get("/Allsubcategory");
       setSubcategory(response.data.data);
     } catch (error) {
       console.log(error);

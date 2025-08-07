@@ -1,243 +1,413 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  BsCart,
-  BsPlusCircle,
-  BsSpeedometer2,
-  BsListCheck,
-  BsReceipt,
-  BsCardChecklist,
-  BsPerson,
-  BsPeopleFill,
-  BsBoxArrowRight,
-} from "react-icons/bs";
+  Bell,
+  Maximize2,
+  ArrowRightCircle,
+  ArrowLeftCircle,
+  Gauge,
+  ShoppingCart,
+  Receipt,
+  User,
+  Plus,
+  List,
+  CheckSquare,
+  Users,
+  LogOut,
+  ShoppingBag,
+  XCircle,
+  UserPlus,
+  AlertTriangle,
+  Package,
+} from "lucide-react";
+import { Outlet } from "react-router-dom";
 
-const Dashboard = ({ adminName = "Abdullah" }) => {
+const Dashboard = () => {
+  const [sidebarActive, setSidebarActive] = useState(true);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      type: "order_received",
+      count: 5,
+      title: "Orders received",
+      desc: "New Orders Placed",
+      icon: ShoppingBag,
+      color: "#28a745",
+    },
+    {
+      id: 2,
+      type: "order_cancelled",
+      count: 2,
+      title: "Orders cancelled",
+      desc: "Check cancellation",
+      icon: XCircle,
+      color: "#dc3545",
+    },
+    {
+      id: 3,
+      type: "new_customer",
+      count: 8,
+      title: "New customers",
+      desc: "Welcome new signups",
+      icon: UserPlus,
+      color: "#0d6efd",
+    },
+    {
+      id: 4,
+      type: "low_stock",
+      count: 12,
+      title: "Low stock",
+      desc: "Replenish inventory soon",
+      icon: AlertTriangle,
+      color: "#ffc107",
+    },
+    {
+      id: 5,
+      type: "out_of_stock",
+      count: 3,
+      title: "Out of stock",
+      desc: "Update or restock items",
+      icon: Package,
+      color: "#6c757d",
+    },
+  ]);
 
-  const [isSidebarVisible, setSidebarVisible] = useState(true);
+  const adminName = "Abdullah";
+  const totalNotifications = notifications.reduce(
+    (sum, notif) => sum + notif.count,
+    0
+  );
 
-const toggleSidebar = () => {
-  setSidebarVisible(!isSidebarVisible);
-};
+  const toggleSidebar = () => {
+    setSidebarActive(!sidebarActive);
+  };
+
+  const toggleDropdown = (dropdown) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+  useEffect(() => {
+    const checkMobile = () => {
+      if (window.innerWidth <= 667) {
+        toggleSidebar();
+      }
+    };
+
+    // Run once on component mount
+    checkMobile();
+
+    // Run on every window resize
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  const handleNotificationClick = (type) => {
+    console.log(`Clicked notification: ${type}`);
+    // Handle notification click logic here
+  };
+
   return (
-    <>
-     <div className={`sidebar ${isSidebarVisible ? "active" : "hidden"}`} id="sidebar">
+    <div className="min-h-screen bg-gray-50">
+      {/* Custom Styles */}
+      <style jsx>{`
+        .rotating-gear i {
+          animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
 
-        <div
-          className="d-block py-3  px-4 fs-4 fw-bold text-primary border-bottom text-decoration-none cursor-pointer"
-          style={{ color: "#2563EB" }}
-        >
-          <a
-            href="./Dashboard"
-            className="text-decoration-none text-primary"
-            style={{ color: "#2563EB" }}
-            onMouseOver={(e) => (e.currentTarget.style.color = "#2563EB")}
-            onMouseOut={(e) => (e.currentTarget.style.color = "#2563EB")}
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 ${
+          sidebarActive ? "left-0" : "left-[-260px]"
+        } w-64 h-full bg-white shadow transition-all duration-300 z-40 overflow-y-auto`}
+      >
+        {/* Logo */}
+        <div className="py-4 px-4 text-2xl font-bold text-blue-600 border-b cursor-pointer">
+          <Link
+            to={"/"}
+            className="text-blue-600 no-underline hover:text-blue-700"
           >
             Adminix
-          </a>
+          </Link>
         </div>
 
-        <div id="sidebarAccordion">
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <a className="nav-link d-flex gap-2" href="./Dashboard">
-                <BsSpeedometer2 /> Dashboard
-              </a>
+        {/* Navigation */}
+        <nav className="mt-2">
+          <ul className="space-y-1">
+            {/* Dashboard */}
+            <li>
+              <Link
+                to={"/"}
+                className="flex items-center  py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium no-underline"
+              >
+                <Gauge className="w-5 h-5 mr-3 " />
+                Dashboard
+              </Link>
             </li>
 
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                data-bs-toggle="collapse"
-                href="#ecommerceMenu"
-                role="button"
-              >
-                <BsCart className="me-2" /> Ecommerce
-              </a>
-              <div
-                className="collapse submenu"
-                id="ecommerceMenu"
-                data-bs-parent="#sidebarAccordion"
-              >
-                <a href="./Add-Product" className="nav-link click">
-                  <BsPlusCircle className="me-2" /> Add Product
-                </a>
-                <a href="./View-Products" className="nav-link click">
-                  <BsListCheck className="me-2" /> Product List
-                </a>
+            {/* Ecommerce */}
+            <li>
+              <div>
+                <button
+                  onClick={() => toggleDropdown("ecommerce")}
+                  className="flex items-center w-full py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium"
+                >
+                  <ShoppingCart className="w-5 h-5 mr-3" />
+                  Ecommerce
+                </button>
+                <div
+                  className={`${
+                    activeDropdown === "ecommerce" ? "block" : "hidden"
+                  } bg-gray-50`}
+                >
+                  <Link
+                    to={"/addProduct"}
+                    className="flex items-center px-10 py-2 text-sm text-gray-600 hover:text-blue-600 no-underline"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Product
+                  </Link>
+                  <Link
+                    to={"/productlist"}
+                    className="flex items-center px-10 py-2 text-sm text-gray-600 hover:text-blue-600 no-underline"
+                  >
+                    <List className="w-4 h-4 mr-2" />
+                    Product List
+                  </Link>
+                </div>
               </div>
             </li>
 
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                data-bs-toggle="collapse"
-                href="#orderMenu"
-                role="button"
-              >
-                <BsReceipt className="me-2" /> Order
-              </a>
-              <div
-                className="collapse submenu"
-                id="orderMenu"
-                data-bs-parent="#sidebarAccordion"
-              >
-                <a href="./View-Orders" className="nav-link">
-                  <BsCardChecklist className="me-2" /> Order List
-                </a>
+            {/* Orders */}
+            <li>
+              <div>
+                <button
+                  onClick={() => toggleDropdown("orders")}
+                  className="flex items-center w-full py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium"
+                >
+                  <Receipt className="w-5 h-5 mr-3" />
+                  Order
+                </button>
+                <div
+                  className={`${
+                    activeDropdown === "orders" ? "block" : "hidden"
+                  } bg-gray-50`}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center px-10 py-2 text-sm text-gray-600 hover:text-blue-600 no-underline"
+                  >
+                    <CheckSquare className="w-4 h-4 mr-2" />
+                    Order List
+                  </a>
+                </div>
               </div>
             </li>
 
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                data-bs-toggle="collapse"
-                href="#userMenu"
-                role="button"
-              >
-                <BsPerson className="me-2" /> User
-              </a>
-              <div
-                className="collapse submenu"
-                id="userMenu"
-                data-bs-parent="#sidebarAccordion"
-              >
-                <a href="./Users" className="nav-link">
-                  <BsPeopleFill className="me-2" /> User List
-                </a>
+            {/* Users */}
+            <li>
+              <div>
+                <button
+                  onClick={() => toggleDropdown("users")}
+                  className="flex items-center w-full text-none py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium"
+                >
+                  <User className="w-5 h-5 mr-3" />
+                  User
+                </button>
+                <div
+                  className={`${
+                    activeDropdown === "users" ? "block" : "hidden"
+                  } bg-gray-50`}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center px-10 py-2 text-sm text-gray-600 hover:text-blue-600 no-underline"
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    User List
+                  </a>
+                </div>
               </div>
             </li>
 
-            <hr className="w-75 mx-3" />
+            {/* Divider */}
+            <li className="pl-10 ">
+              <hr className="border-t border-gray-300 my-4 w-3/4" />
+            </li>
 
-            <li className="nav-item">
-              <a className="nav-link" href="../Process/logout-admin">
-                <BsBoxArrowRight className="me-2" /> Logout
+            {/* Logout */}
+            <li>
+              <a
+                href="#"
+                className="flex items-center  py-1 text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium no-underline"
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Logout
               </a>
             </li>
           </ul>
-        </div>
-      </div>
-
-     <div className={`content-wrapper ${isSidebarVisible ? "shifted" : "full-width"}`} id="contentWrapper">
-
-        {/* Navbar */}
-        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3 py-2 sticky-top">
-          <div className="container-fluid d-flex align-items-center">
-            {/* Sidebar Toggle Button */}
-           <button className="sidebar-toggle-btn me-3 sidebarToggle" onClick={toggleSidebar}>
-  <i
-    id="toggleIcon"
-    className={`bi ${isSidebarVisible ? "bi-arrow-left-circle" : "bi-arrow-right-circle"}`}
-  ></i>
-</button>
-
-
-            {/* Admin greeting */}
-            <h2 className="admin d-none">Hi Admin, {adminName}</h2>
-
-            {/* Alternative to Search Bar */}
-            <div className="flex-grow-1 me-3">
-              <h5 className="mb-0 text-muted">Dashboard</h5>
-            </div>
-
-            {/* Right side icons */}
-            <ul className="navbar-nav flex-row align-items-center gap-2 gap-sm-1">
-              <li className="nav-item dropdown cursor-pointer">
-                <a
-                  className="nav-link position-relative"
-                  href="#"
-                  id="notificationDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i className="bi bi-bell fs-5"></i>
-                  <span
-                    className="position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger shadow-sm"
-                    style={{ fontSize: "0.7rem", padding: "0.2em 0.5em" }}
-                  >
-                    0
-                    <span className="visually-hidden">
-                      unread notifications
-                    </span>
-                  </span>
-                </a>
-
-                <ul
-                  className="dropdown-menu dropdown-menu-end shadow border-0 p-0 rounded-4 cursor-pointer"
-                  aria-labelledby="notificationDropdown"
-                  style={{ width: "260px", maxWidth: "90vw" }}
-                >
-                  <li className="px-3 py-2 border-bottom">
-                    <span className="fw-semibold small">Notifications</span>
-                  </li>
-
-                  <li>
-                    <ul className="list-unstyled mb-0">
-                      <li className="px-2 py-2 border-bottom">
-                        <a
-                          href="./notification?notification=order_received"
-                          className="d-flex justify-content-between align-items-center gap-2 text-decoration-none text-dark"
-                        >
-                          <div className="d-flex align-items-start gap-2">
-                            <div
-                              className="rounded-circle d-flex justify-content-center align-items-center flex-shrink-0"
-                              style={{
-                                width: 36,
-                                height: 36,
-                                backgroundColor: "#28a745",
-                              }}
-                            >
-                              <i className="bi bi-cart-check text-white fs-5"></i>
-                            </div>
-
-                            <div>
-                              <div className="fw-semibold small">
-                                Orders received
-                              </div>
-                              <div className="text-muted x-small">
-                                New Orders Placed
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-
-              <li onClick={toggleSidebar} className="nav-item">
-                <a id="" className="nav-link sidebarToggle" href="#">
-                  <i className="bi bi-arrows-fullscreen"></i>
-                </a>
-              </li>
-
-              {/* User Info */}
-              <li className="nav-item d-flex align-items-center gap-2 ms-2">
-                <a href="#">
-                  <img
-                    src="./images/Abdullah.png"
-                    className="rounded-circle shadow-sm"
-                    style={{ objectFit: "cover" }}
-                    width="40"
-                    height="40"
-                    alt="User"
-                  />
-                </a>
-                <div className="user-info d-none d-sm-block">
-                  <span className="fw-semibold small">{adminName}</span>
-                  <br />
-                  <small className="text-muted fw-bold">Admin</small>
-                </div>
-              </li>
-            </ul>
-          </div>
         </nav>
       </div>
-    </>
+
+      {/* Main Content */}
+      <div
+        className={`transition-all duration-300 ${
+          sidebarActive ? "ml-64" : "ml-0"
+        }`}
+      >
+        {/* Top Navbar */}
+        <nav className="sticky top-0 z-30 bg-white shadow-sm px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Left side */}
+            <div className="flex items-center">
+              {/* Sidebar Toggle */}
+              <button
+                onClick={toggleSidebar}
+                className="p-2 mr-4 text-blue-600 hover:text-blue-700 hover:rotate-180 hover:scale-110 transition-all duration-300"
+              >
+                {sidebarActive ? (
+                  <ArrowLeftCircle className="w-7 h-7" />
+                ) : (
+                  <ArrowRightCircle className="w-7 h-7" />
+                )}
+              </button>
+
+              {/* Admin Greeting */}
+              <div className="hidden lg:block">
+                <h5 className="text-gray-600 font-medium ">Dashboard</h5>
+              </div>
+            </div>
+
+            {/* Right side */}
+            <div className="flex items-center space-x-3">
+              {/* Notifications */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("notifications")}
+                  className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <Bell className="w-6 h-6 text-gray-600" />
+                  {totalNotifications > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
+                      {totalNotifications}
+                    </span>
+                  )}
+                </button>
+
+                {/* Notifications Dropdown */}
+                {activeDropdown === "notifications" && (
+                  <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border z-50">
+                    <div className="px-4 py-3 border-b">
+                      <span className="font-semibold text-sm">
+                        Notifications
+                      </span>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map((notification) => {
+                        const IconComponent = notification.icon;
+                        return (
+                          <div
+                            key={notification.id}
+                            onClick={() =>
+                              handleNotificationClick(notification.type)
+                            }
+                            className="px-3 py-3 border-b hover:bg-gray-50 cursor-pointer"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-start space-x-3">
+                                <div
+                                  className="rounded-full p-1.5 flex items-center justify-center"
+                                  style={{
+                                    backgroundColor: notification.color,
+                                  }}
+                                >
+                                  <IconComponent className="w-4 h-4 text-white" />
+                                </div>
+                                <div>
+                                  <div
+                                    className="font-semibold text-sm"
+                                    style={{
+                                      color:
+                                        notification.id === 2
+                                          ? "#dc3545"
+                                          : notification.id === 4
+                                          ? "#ffc107"
+                                          : notification.id === 5
+                                          ? "#6c757d"
+                                          : "inherit",
+                                    }}
+                                  >
+                                    {notification.title}
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    {notification.desc}
+                                  </div>
+                                </div>
+                              </div>
+                              {notification.count > 0 && (
+                                <span className="bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
+                                  {notification.count}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Fullscreen Toggle */}
+              <button
+                onClick={toggleSidebar}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <Maximize2 className="w-6 h-6 text-gray-600" />
+              </button>
+
+              {/* User Profile */}
+              <div className="flex items-center space-x-3 ml-4">
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+                  alt="Admin"
+                  className="w-10 h-10 rounded-full object-cover shadow-sm"
+                />
+                <div className="hidden sm:block">
+                  <div className="text-sm font-semibold">{adminName}</div>
+                  <div className="text-xs text-gray-500 font-bold">Admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        {/* Main Content Area */}
+        <main className="p-6">
+          <Outlet />
+        </main>
+      </div>
+
+      {/* Click outside to close dropdowns */}
+      {activeDropdown && (
+        <div
+          className="fixed inset-0 z-20"
+          onClick={() => setActiveDropdown(null)}
+        ></div>
+      )}
+    </div>
   );
 };
 
