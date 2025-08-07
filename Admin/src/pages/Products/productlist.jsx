@@ -51,7 +51,7 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container p-4 border rounded shadow-sm bg-white">
+    <div className="container-fluid p-4 border rounded shadow-sm bg-white">
       <h4 className="mb-4 text-center fw-bold">📦 View Product List</h4>
 
       <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2 table-control-wrapper">
@@ -213,13 +213,15 @@ const ProductList = () => {
                         Remove
                       </span>
                     </td>
-                    <td className="text-center">
-                      <a
-                        href={`./Product-Update.php?updationId=${product.id}`}
+                    <td className="text-center cursor-pointer
+">
+                      <Link
+                        to={`/updateProduct/${product.productid}`}
+                        // to={'/updateProduct'}
                         className="badge bg-warning text-white text-decoration-none px-3 py-2"
                       >
                         Update
-                      </a>
+                      </Link>
                     </td>
                     {/* <td className="text-nowrap text-center">
                   {new Date(product.created_at).toLocaleString("en-GB", {

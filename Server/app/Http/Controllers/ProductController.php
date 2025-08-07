@@ -95,12 +95,16 @@ class ProductController extends Controller
             ->distinct()
             ->join('product_images', 'product_images.product_id', '=', 'products.id')
             ->join('brand', 'brand.id', '=', 'products.brand_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('subcategories', 'subcategories.id', '=', 'products.subcategory_id')
             ->where('products.id', $id)
             ->orderBy('products.id', 'DESC')
             ->select(
                 'products.id as productid',
                 'products.name',
                 'products.quantity',
+                'categories.name as category_name',
+                'subcategories.name as subcategories_name',
                 'products.description',
                 'products.price',
                 'brand.name as brand',
@@ -147,52 +151,50 @@ class ProductController extends Controller
 
 
 
-public function addProduct(Request $request)
-{
-    try {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-            'category_id' => 'required|integer',
-            'subcategory_id' => 'required|integer',
-            'brand_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+    public function addProduct(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string',
+                'description' => 'required|string',
+                'price' => 'required|numeric',
+                'quantity' => 'required|integer',
+                'category_id' => 'required|integer',
+                'subcategory_id' => 'required|integer',
+                'brand_id' => 'required|integer',
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
 
-        // 🖼 Upload Image
-        $imagePath = $request->file('image')->store('products', 'public');
+            // 🖼 Upload Image
+            $imagePath = $request->file('image')->store('products', 'public');
 
-        // 📦 Create Product using Eloquent
-        $product = Product::create([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'price' => $validated['price'],
-            'quantity' => $validated['quantity'],
-            'brand_id' => $validated['brand_id'],
-            'category_id' => $validated['category_id'],
-            'subcategory_id' => $validated['subcategory_id'],
-        ]);
+            // 📦 Create Product using Eloquent
+            $product = Product::create([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'price' => $validated['price'],
+                'quantity' => $validated['quantity'],
+                'brand_id' => $validated['brand_id'],
+                'category_id' => $validated['category_id'],
+                'subcategory_id' => $validated['subcategory_id'],
+            ]);
 
-        // 🖼 Save in product_images table
-        ProductImage::create([
-            'product_id' => $product->id,
-            'image_url' => $imagePath,
-        ]);
+            // 🖼 Save in product_images table
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image_url' => $imagePath,
+            ]);
 
-        return response()->json([
-            'message' => 'Product added successfully',
-            'product_id' => $product->id,
-        ]);
-
-    } catch (\Throwable $e) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'line' => $e->getLine(),
-            'file' => $e->getFile(),
-        ], 500);
+            return response()->json([
+                'message' => 'Product added successfully',
+                'product_id' => $product->id,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ], 500);
+        }
     }
-}
-
 }
